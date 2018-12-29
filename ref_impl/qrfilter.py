@@ -70,5 +70,28 @@ def qr_filter(pp_image):
 
 
 if __name__ == "__main__":
-    img = cv.imread("./resources/sel_bin.jpg", 0)
-    qr_filter(img) 
+    import time 
+    import prepro
+    path = './resources/raw/'
+    output_path = './resources/1.txt'
+    ofs = open(output_path, 'w')
+    
+    _acc = 0
+    for f in range(1, 51):
+        file_path_in = path + str(f) +'.jpg'
+        img = cv.imread(file_path_in)
+        grey = prepro.pre_process(img)
+        _st = time.time() 
+        crops = qr_filter(grey)
+        _acc = time.time() - _st 
+        line = "{index}\t{height}\t{width}\t{ROI}\n".format_map({
+            'index':f, 
+            'height':grey.shape[0], 
+            'width':grey.shape[1], 
+            'ROI':len(crops)
+            })
+        ofs.write(line)
+        print(f)
+    ofs.close()
+    
+    print('time:', _acc)

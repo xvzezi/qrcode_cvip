@@ -57,9 +57,17 @@ def pre_process(input_image):
     return grey
 
 if __name__ == "__main__":
-    path = './resources/cap.jpg'
-    img = cv.imread(path)
-    # cv.imshow('origin', img)
-    # cv.waitKey(0)
-    img = pre_process(img)
-    cv.imwrite('./resources/sel_bin.jpg', img)
+    import time 
+    path = './resources/raw/'
+    output_path = './resources/tmp/3rd'
+    
+    _acc = 0
+    for f in range(1, 51):
+        file_path_in = path + str(f) +'.jpg'
+        img = cv.imread(file_path_in)
+        _st = time.time() 
+        grey = pre_process(img)
+        _acc += time.time() - _st 
+        print(f)
+    
+    print('time:', _acc)
