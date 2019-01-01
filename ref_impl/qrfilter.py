@@ -84,11 +84,12 @@ if __name__ == "__main__":
         _st = time.time() 
         crops = qr_filter(grey)
         _acc = time.time() - _st 
-        line = "{index}\t{height}\t{width}\t{ROI}\n".format_map({
+        line = "{index}\t{height}\t{width}\t{ROI}\t{time}\n".format_map({
             'index':f, 
             'height':grey.shape[0], 
             'width':grey.shape[1], 
-            'ROI':len(crops)
+            'ROI':len(crops),
+            'time':_acc
             })
         ofs.write(line)
         print(f)
